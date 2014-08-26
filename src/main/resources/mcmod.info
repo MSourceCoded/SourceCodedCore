@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sourcecodedcore",
+  "name": "SourceCoded Core",
+  "description": "A core API for all of SourceCoded's mods",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.sourcecoded.info/mods/sourcecodedcore",
+  "updateUrl": "http://dl.sourcecoded.info/mods/sourcecodedcore",
+  "authorList": ["SourceCoded"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
