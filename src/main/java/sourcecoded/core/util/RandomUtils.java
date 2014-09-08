@@ -3,6 +3,9 @@ package sourcecoded.core.util;
 import java.math.BigDecimal;
 import java.util.Random;
 
+/**
+ * Various utils for generating Random numbers
+ */
 public class RandomUtils {
 
     public static Random rnd = new Random();

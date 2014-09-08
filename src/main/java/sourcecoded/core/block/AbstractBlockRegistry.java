@@ -9,11 +9,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * A Block registration class for you to extend and use
+ * for your own mods
+ */
 public abstract class AbstractBlockRegistry {
 
     public HashMap<String, Block> blockMap = new HashMap<String, Block>();
 
     @SuppressWarnings("unchecked")
+    /**
+     * Registers all the Blocks added in the
+     * addAll() method.
+     *
+     * Call this in preInit/Init.
+     */
     public void registerAll() {
         addAll();
 
@@ -37,13 +47,25 @@ public abstract class AbstractBlockRegistry {
         }
     }
 
-    public void addBlock(String name, Block blockOBJ) {
+    /**
+     * Add a Block to the registry
+     *
+     * @param name The unlocalized name to give the Item
+     */
+    public AbstractBlockRegistry addBlock(String name, Block blockOBJ) {
         blockMap.put(name, blockOBJ);
+        return this;
     }
 
+    /**
+     * Returns a Block matching the name given
+     */
     public Block getBlockByName(String name) {
         return blockMap.get(name);
     }
 
+    /**
+     * Called when Blocks are ready to be added
+     */
     public abstract void addAll();
 }

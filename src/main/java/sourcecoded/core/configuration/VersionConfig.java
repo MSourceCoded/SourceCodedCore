@@ -6,6 +6,14 @@ import sourcecoded.core.util.SourceLogger;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * A configuration class extending SourceConfig
+ * used for keeping track of the Configuration's
+ * version. Useful for keeping track of Config
+ * options during Mod updates
+ *
+ * @see sourcecoded.core.configuration.SourceConfig
+ */
 public class VersionConfig extends SourceConfig {
 
     public static SourceLogger configLogger = new SourceLogger("SourceCodedCore-Configuration");
@@ -19,6 +27,9 @@ public class VersionConfig extends SourceConfig {
         super(configFile);
     }
 
+    /**
+     * Create a new Config
+     */
     public static VersionConfig createNewVersionConfig(File configFile, String targetVersion, String modid) throws IOException {
         VersionConfig config = new VersionConfig(configFile);
         config.modid = modid;

@@ -5,7 +5,7 @@ import net.minecraft.item.crafting.IRecipe;
 
 public class CraftingRegistration {
 
-    public  static void register(IRecipe[] recipes) {
+    public static void register(IRecipe[] recipes) {
         for (IRecipe current : recipes)
             GameRegistry.addRecipe(current);
     }

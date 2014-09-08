@@ -9,6 +9,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Mod makers can have fun too, right?
+ */
 public class JustForFun {
 
     public int rTimer = 0;

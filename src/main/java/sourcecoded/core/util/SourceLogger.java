@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Level;
 
 import static org.apache.logging.log4j.Level.*;
 
+/**
+ * An Objectified logger
+ */
 public class SourceLogger {
 
     public String modid;
