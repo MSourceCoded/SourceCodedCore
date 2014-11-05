@@ -43,6 +43,22 @@ public abstract class AbstractItemRegistry {
             if (CommonUtils.isClient() && theItem instanceof IItemHasRenderer)
                 MinecraftForgeClient.registerItemRenderer(theItem, ((IItemHasRenderer) theItem).getRenderer(theItem));
 
+            it.remove();
+        }
+
+        doCraftingRegistration();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void doCraftingRegistration() {
+        HashMap<String, Item> cloned = (HashMap<String, Item>) itemMap.clone();
+
+        Iterator<Map.Entry<String, Item>> it = cloned.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Item> pairs = it.next();
+
+            Item theItem = pairs.getValue();
+
             if (theItem instanceof ICraftableItem)
                 CraftingRegistration.register(((ICraftableItem) theItem).getRecipes(theItem));
 

@@ -2,7 +2,7 @@
 {
   "modid": "sourcecodedcore",
   "name": "SourceCoded Core",
-  "description": "A core API for all of SourceCoded's mods",
+  "description": "A core API for all of SourceCoded's mods. Also includes useful utilities like optimized screenshots",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "http://www.sourcecoded.info/mods/sourcecodedcore",

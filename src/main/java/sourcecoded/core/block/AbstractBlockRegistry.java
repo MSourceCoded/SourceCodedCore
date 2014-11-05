@@ -40,6 +40,22 @@ public abstract class AbstractBlockRegistry {
             else
                 GameRegistry.registerBlock(theBlock, pairs.getKey());
 
+            it.remove();
+        }
+
+        doCraftingRegistration();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void doCraftingRegistration() {
+        HashMap<String, Block> cloned = (HashMap<String, Block>) blockMap.clone();
+
+        Iterator<Map.Entry<String, Block>> it = cloned.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Block> pairs = it.next();
+
+            Block theBlock = pairs.getValue();
+
             if (theBlock instanceof ICraftableBlock)
                 CraftingRegistration.register(((ICraftableBlock) theBlock).getRecipes(theBlock));
 

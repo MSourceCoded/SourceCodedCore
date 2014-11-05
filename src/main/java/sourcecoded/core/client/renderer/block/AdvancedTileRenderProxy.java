@@ -69,6 +69,9 @@ public class AdvancedTileRenderProxy implements ISimpleBlockRenderingHandler {
             te = prov.createNewTileEntity(null, world.getBlockMetadata(x, y, z));
         } else return false;
 
+        if (world.getTileEntity(x, y, z) != null)
+            te = world.getTileEntity(x, y, z);
+
         Tessellator.instance.draw();
         TESRStaticHandler renderer = (TESRStaticHandler) TileEntityRendererDispatcher.instance.mapSpecialRenderers.get(te.getClass());
         renderer.renderTile(te, x, y, z, 0, true);
