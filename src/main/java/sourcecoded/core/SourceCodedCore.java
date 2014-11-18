@@ -8,8 +8,13 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.CoreModManager;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.launchwrapper.Launch;
+import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +28,9 @@ import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
 import sourcecoded.core.util.CommonUtils;
 import sourcecoded.core.util.JustForFun;
 import sourcecoded.core.util.SourceLogger;
+import sourcecoded.core.version.VersionAlertHandler;
+import sourcecoded.core.version.VersionChecker;
+import sourcecoded.core.version.VersionCommand;
 
 import java.io.IOException;
 
@@ -31,8 +39,20 @@ public class SourceCodedCore {
 
     public static KeyBinding keyScreenshot = new KeyBinding("Take Screenshot", 60, "SourceCodedCore");
 
+    public static VersionChecker checker;
+
+    public static boolean isDevEnv = false;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
+        isDevEnv = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+
+        if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
+            checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
+
+        if (event.getSide() == Side.CLIENT)
+            FMLCommonHandler.instance().bus().register(new VersionAlertHandler());
+
         SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.2", Constants.MODID));
 
         if (CommonUtils.isClient()) {
@@ -61,6 +81,13 @@ public class SourceCodedCore {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        if (!isDevEnv && checker != null)
+            checker.check();
+    }
+
+    @Mod.EventHandler
+    public void serverStart(FMLServerStartingEvent event) {
+        event.registerServerCommand(new VersionCommand());
     }
 }
 
