@@ -37,5 +37,4 @@ public class ScreenshotTickHandler {
             isTakingScreenshotCurrently = true;
         } else isTakingScreenshotCurrently = false;
     }
-
 }

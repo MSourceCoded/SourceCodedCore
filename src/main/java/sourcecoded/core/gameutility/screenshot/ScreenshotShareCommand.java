@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.*;
 
 public class ScreenshotShareCommand extends CommandBase {
 
@@ -122,5 +123,10 @@ public class ScreenshotShareCommand extends CommandBase {
 
         return URLEncoder.encode("image", "UTF-8") + "="
                 + URLEncoder.encode(dataImage, "UTF-8");
+    }
+
+    public java.util.List addTabCompletionOptions(ICommandSender sender, String[] str) {
+        if (str.length == 1) return getListOfStringsMatchingLastWord(str, "imgur");
+        return null;
     }
 }
