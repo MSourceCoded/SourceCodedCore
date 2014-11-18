@@ -1,6 +1,5 @@
 package sourcecoded.core.version;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import sourcecoded.core.util.SourceLogger;
 
 import java.io.BufferedReader;
