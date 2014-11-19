@@ -139,7 +139,7 @@ public class SCScreenshotHandler {
 
         while (true)
         {
-            File file2 = new File(par0File, s + (i == 1 ? "" : "_" + i) + "_c.png");
+            File file2 = new File(par0File, s + "_scc" + (i == 1 ? "" : "_" + i) + ".png");
 
             if (!file2.exists())
             {

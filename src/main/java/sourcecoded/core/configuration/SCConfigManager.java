@@ -92,8 +92,6 @@ public class SCConfigManager {
 
     public static enum Properties {
         SCREENSHOT_MESSAGE(Categories.SCREENSHOT, "sc_ss_message", "Will display the default 'screenshot saved' text after a screenshot was taken", true),
-        SCREENSHOT_STANDARD(Categories.SCREENSHOT, "sc_ss_standard", "The key to use for standard vanilla screenshots without optimization", 0),
-
         VERS_AUTO(Categories.VERSION, "vers_auto", "Should new Versions of this mod automatically update?", true),
         VERS_SILENT(Categories.VERSION, "vers_silent", "Should this mod not send chat messages for updates?", false),
         VERS_ON(Categories.VERSION, "vers_enabled", "Should this mod use a version checker?", true),
