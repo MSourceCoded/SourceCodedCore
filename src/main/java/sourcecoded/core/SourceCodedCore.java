@@ -46,14 +46,13 @@ public class SourceCodedCore {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         isDevEnv = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.2", Constants.MODID));
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
 
         if (event.getSide() == Side.CLIENT)
             FMLCommonHandler.instance().bus().register(new VersionAlertHandler());
-
-        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.2", Constants.MODID));
 
         if (CommonUtils.isClient()) {
             RenderingRegistry.registerBlockHandler(new SimpleTileRenderProxy());
