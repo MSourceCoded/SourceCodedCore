@@ -2,40 +2,25 @@ package sourcecoded.core;
 
 import java.io.IOException;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.MinecraftForge;
-import sourcecoded.core.client.renderer.SCRenderManager;
-import sourcecoded.core.client.renderer.block.AdvancedTileRenderProxy;
-import sourcecoded.core.client.renderer.block.SimpleTileRenderProxy;
 import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
-import sourcecoded.core.gameutility.screenshot.ScreenshotShareCommand;
-import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
-import sourcecoded.core.util.CommonUtils;
-import sourcecoded.core.util.JustForFun;
-import sourcecoded.core.version.VersionAlertHandler;
+import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.version.VersionChecker;
 import sourcecoded.core.version.VersionCommand;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION)
 public class SourceCodedCore {
-
-    public static KeyBinding keyScreenshot = new KeyBinding("Take Screenshot", 60, "SourceCodedCore");
+    @SidedProxy(clientSide = "sourcecoded.core.proxy.ClientProxy", serverSide = "sourcecoded.core.proxy.ServerProxy")
+    public static IProxy proxy;
 
     public static VersionChecker checker;
-
     public static boolean isDevEnv = false;
 
     @Mod.EventHandler
@@ -45,32 +30,13 @@ public class SourceCodedCore {
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
-
-        if (event.getSide() == Side.CLIENT)
-            FMLCommonHandler.instance().bus().register(new VersionAlertHandler());
-
-        if (CommonUtils.isClient()) {
-            RenderingRegistry.registerBlockHandler(new SimpleTileRenderProxy());
-            RenderingRegistry.registerBlockHandler(new AdvancedTileRenderProxy());
-        }
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
-            MinecraftForge.EVENT_BUS.register(new JustForFun());
-
-            FMLCommonHandler.instance().bus().register(new ScreenshotTickHandler());
-
-            Minecraft mc = Minecraft.getMinecraft();
-            mc.gameSettings.setOptionKeyBinding(mc.gameSettings.keyBindScreenshot, SCConfigManager.getInteger(SCConfigManager.Properties.SCREENSHOT_STANDARD));
-
-            ClientRegistry.registerKeyBinding(keyScreenshot);
-
-            ClientCommandHandler.instance.registerCommand(new ScreenshotShareCommand());
-        }
-
-        FMLCommonHandler.instance().bus().register(new SCRenderManager());
+        proxy.registerKeybindings();
+        proxy.registerRenderers();
+        proxy.registerClientMisc();
     }
 
     @Mod.EventHandler

@@ -5,11 +5,14 @@ import net.minecraft.util.IChatComponent;
 
 import org.lwjgl.input.Keyboard;
 
-import sourcecoded.core.SourceCodedCore;
+import sourcecoded.core.client.settings.Keybindings;
 import sourcecoded.core.configuration.SCConfigManager;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ScreenshotTickHandler {
 
     public boolean isTakingScreenshotCurrently = false;         //Only run once
@@ -25,7 +28,7 @@ public class ScreenshotTickHandler {
 
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event) {
-        if (Keyboard.isKeyDown(SourceCodedCore.keyScreenshot.getKeyCode())) {
+        if (Keyboard.isKeyDown(Keybindings.keyScreenshot.getKeyCode())) {
             if (!isTakingScreenshotCurrently) {
                 Minecraft mc = Minecraft.getMinecraft();
                 IChatComponent data = SCScreenshotHandler.saveScreenshot(mc.mcDataDir, mc.displayWidth, mc.displayHeight, mc.getFramebuffer());
