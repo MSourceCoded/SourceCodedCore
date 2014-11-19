@@ -23,6 +23,7 @@ public class SourceConfig {
     public SourceConfig(File configFile) {
         this.config = new Configuration(configFile);
         this.configFile = configFile;
+        this.loadConfig();
     }
 
     /**
@@ -77,7 +78,7 @@ public class SourceConfig {
     }
 
     public double getDouble(String category, String propertyName) {
-        return config.get(category, propertyName, false).getDouble();
+        return config.get(category, propertyName, 0.0d).getDouble();
     }
 
     /**
@@ -88,7 +89,7 @@ public class SourceConfig {
     }
 
     public String getString(String category, String propertyName) {
-        return config.get(category, propertyName, false).getString();
+        return config.get(category, propertyName, "").getString();
     }
 
     public void setComment(String category, String property, String comment) {
