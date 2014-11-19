@@ -55,8 +55,7 @@ public class SourceConfig {
     }
 
     public int getInteger(String category, String propertyName) {
-        Property prop = getProperty(category, propertyName);
-        return prop.getInt();
+        return config.get(category, propertyName, 0).getInt();
     }
 
     /**
@@ -67,8 +66,7 @@ public class SourceConfig {
     }
 
     public boolean getBool(String category, String propertyName) {
-        Property prop = getProperty(category, propertyName);
-        return prop.getBoolean();
+        return config.get(category, propertyName, false).getBoolean();
     }
 
     /**
@@ -79,8 +77,7 @@ public class SourceConfig {
     }
 
     public double getDouble(String category, String propertyName) {
-        Property prop = getProperty(category, propertyName);
-        return prop.getDouble();
+        return config.get(category, propertyName, false).getDouble();
     }
 
     /**
@@ -91,8 +88,7 @@ public class SourceConfig {
     }
 
     public String getString(String category, String propertyName) {
-        Property prop = getProperty(category, propertyName);
-        return prop.getString();
+        return config.get(category, propertyName, false).getString();
     }
 
     public void setComment(String category, String property, String comment) {
