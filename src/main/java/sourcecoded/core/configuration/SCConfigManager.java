@@ -66,6 +66,7 @@ public class SCConfigManager {
     }
 
     public static enum Categories {
+        MISC("misc", "Miscellaneous settings"),
         SCREENSHOT("screenshot", "Configuration Values for the 'Screenshot' Utility"),
         VERSION("version", "Version Checker"),
         ;
@@ -91,6 +92,8 @@ public class SCConfigManager {
     }
 
     public static enum Properties {
+        JUSTFORFUN_ENABLED(Categories.MISC, "justforfun_enabled", "Is the 'just for fun' extra feature rendering enabled", true),
+        SCREENSHOT_ENABLED(Categories.SCREENSHOT, "sc_ss_enabled", "Is the custom screenshot feature enabled", true),
         SCREENSHOT_MESSAGE(Categories.SCREENSHOT, "sc_ss_message", "Will display the default 'screenshot saved' text after a screenshot was taken", true),
         VERS_AUTO(Categories.VERSION, "vers_auto", "Should new Versions of this mod automatically update?", true),
         VERS_SILENT(Categories.VERSION, "vers_silent", "Should this mod not send chat messages for updates?", false),
