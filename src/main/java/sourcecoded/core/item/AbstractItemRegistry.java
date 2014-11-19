@@ -1,16 +1,15 @@
 package sourcecoded.core.item;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import sourcecoded.core.crafting.CraftingRegistration;
 import sourcecoded.core.crafting.ICraftableItem;
 import sourcecoded.core.util.CommonUtils;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * An Item registration class for you to extend and use

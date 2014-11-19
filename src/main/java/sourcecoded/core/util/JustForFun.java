@@ -1,20 +1,20 @@
 package sourcecoded.core.util;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.obj.WavefrontObject;
+
 import org.lwjgl.opengl.GL11;
 
-import static org.lwjgl.opengl.GL11.*;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Mod makers can have fun too, right?
@@ -34,7 +34,6 @@ public class JustForFun {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void renderSource(RenderPlayerEvent.Specials.Pre event) {
         EntityLivingBase entity = event.entityPlayer;
-        String name = EnumChatFormatting.getTextWithoutFormattingCodes(entity.getCommandSenderName());
 
         if (shouldRenderAddon(entity)) {
             GL11.glPushMatrix();

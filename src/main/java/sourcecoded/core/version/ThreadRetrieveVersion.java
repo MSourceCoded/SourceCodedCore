@@ -1,12 +1,11 @@
 package sourcecoded.core.version;
 
-import sourcecoded.core.util.SourceLogger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.Buffer;
+
+import sourcecoded.core.util.SourceLogger;
 
 public class ThreadRetrieveVersion extends Thread {
 

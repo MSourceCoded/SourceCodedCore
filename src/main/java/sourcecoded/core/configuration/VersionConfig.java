@@ -1,10 +1,11 @@
 package sourcecoded.core.configuration;
 
-import org.apache.commons.io.FileUtils;
-import sourcecoded.core.util.SourceLogger;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
+import sourcecoded.core.util.SourceLogger;
 
 /**
  * A configuration class extending SourceConfig
@@ -21,7 +22,6 @@ public class VersionConfig extends SourceConfig {
 
     String targetVersion;
     String modid;
-    public File oldConfig;
 
     private VersionConfig(File configFile) {
         super(configFile);
@@ -39,24 +39,28 @@ public class VersionConfig extends SourceConfig {
     }
 
     private static VersionConfig setupVersioning(VersionConfig config) throws IOException {
-        config.createProperty(CATEGORY_VERSION, "ConfigRevision", config.targetVersion);
-        config.saveConfig();
 
-        config.config.addCustomCategoryComment(CATEGORY_VERSION, "Used for Configuration Version Control. DO NOT CHANGE THIS.");
         String currentVersion = config.getString(CATEGORY_VERSION, "ConfigRevision");
 
         if (!currentVersion.equals(config.targetVersion)) {
-            configLogger.error(String.format("Configuration File for Mod: %s is out of date! (target %s, found %s). The old configuration has been moved to /configOld/%s_old", config.modid, config.targetVersion, currentVersion, config.configFile.getName()));
+            configLogger.error(String.format("Configuration File for Mod: %s is out of date! (target %s, found %s). Trying to move the old configuration file to %s_old", config.modid, config.targetVersion, currentVersion, config.configFile.getName()));
 
-            File newDir = new File(config.configFile.getPath() + "/../../configOld");
-            File target = new File(newDir + "/" + config.configFile.getName() + "_old");
+            File target = new File(config.configFile.getAbsolutePath() + "_old");
 
-            if (target.exists()) target.delete();
-            FileUtils.moveFile(config.configFile, target);
+            if (target.exists()) {
+                target.delete();
+            }
 
-            VersionConfig config1 = createNewVersionConfig(config.configFile, config.targetVersion, config.modid);
-            config1.oldConfig = target;
-            return config1;
+            try {
+                FileUtils.moveFile(config.configFile, target);
+            } catch (IOException e) {
+                configLogger.error("Failed to move the old configuration file to %s" + target.getName());
+                return config;
+            }
+
+            config.createProperty(CATEGORY_VERSION, "ConfigRevision", config.targetVersion).set(config.targetVersion);
+            config.config.addCustomCategoryComment(CATEGORY_VERSION, "Used for Configuration Version Control. DO NOT CHANGE THIS.");
+            config.saveConfig();
         }
 
         return config;

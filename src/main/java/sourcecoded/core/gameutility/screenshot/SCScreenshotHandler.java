@@ -1,19 +1,5 @@
 package sourcecoded.core.gameutility.screenshot;
 
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +7,22 @@ import java.nio.IntBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
+
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.shader.Framebuffer;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class SCScreenshotHandler {
 
@@ -32,8 +34,6 @@ public class SCScreenshotHandler {
      * The built-up array that contains all the pixel values returned by OpenGL.
      */
     private static int[] pixelValues;
-    private static final String __OBFID = "CL_00000656";
-
     public static File mostRecentScreenshot;
 
     /**
@@ -139,7 +139,7 @@ public class SCScreenshotHandler {
 
         while (true)
         {
-            File file2 = new File(par0File, s + (i == 1 ? "" : "_" + i) + "_c.png");
+            File file2 = new File(par0File, s + "_scc" + (i == 1 ? "" : "_" + i) + ".png");
 
             if (!file2.exists())
             {

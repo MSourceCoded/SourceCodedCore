@@ -1,12 +1,14 @@
 package sourcecoded.core.version;
 
-import cpw.mods.fml.relauncher.FMLInjectionData;
-import org.apache.commons.compress.compressors.FileNameUtil;
-import sourcecoded.core.util.SourceLogger;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import sourcecoded.core.util.SourceLogger;
+import cpw.mods.fml.relauncher.FMLInjectionData;
 
 public class ThreadDownloadVersion extends Thread {
 

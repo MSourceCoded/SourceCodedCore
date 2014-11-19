@@ -1,17 +1,14 @@
 package sourcecoded.core.tile;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import sourcecoded.core.SourceCodedCore;
-import sourcecoded.core.util.CommonUtils;
-import sourcecoded.core.util.SourceLogger;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
+import sourcecoded.core.util.CommonUtils;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * A TileEntity registration class for you to extend and use

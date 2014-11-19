@@ -1,13 +1,13 @@
 package sourcecoded.core.block;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import sourcecoded.core.crafting.CraftingRegistration;
-import sourcecoded.core.crafting.ICraftableBlock;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import net.minecraft.block.Block;
+import sourcecoded.core.crafting.CraftingRegistration;
+import sourcecoded.core.crafting.ICraftableBlock;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * A Block registration class for you to extend and use

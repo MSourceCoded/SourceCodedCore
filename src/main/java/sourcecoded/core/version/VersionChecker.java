@@ -1,18 +1,17 @@
 package sourcecoded.core.version;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import net.minecraft.client.Minecraft;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
-import scala.actors.threadpool.Arrays;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import sourcecoded.core.SourceCodedCore;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class VersionChecker {
 
@@ -84,7 +83,7 @@ public class VersionChecker {
         if (FMLCommonHandler.instance().getSide() != Side.CLIENT) return;
         if (silent) return;
 
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        EntityPlayer player = SourceCodedCore.proxy.getClientPlayer();
         if (player != null) {
             player.addChatComponentMessage(new ChatComponentText("Download of: " + modid + " @ " + onlineParsed + " is complete! Restart MC to apply changes!").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA)));
         }
