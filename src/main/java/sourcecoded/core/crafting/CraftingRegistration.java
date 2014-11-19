@@ -1,7 +1,7 @@
 package sourcecoded.core.crafting;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.crafting.IRecipe;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CraftingRegistration {
 

@@ -1,9 +1,14 @@
 package sourcecoded.core.util;
 
-import cpw.mods.fml.common.FMLLog;
+import static org.apache.logging.log4j.Level.ALL;
+import static org.apache.logging.log4j.Level.ERROR;
+import static org.apache.logging.log4j.Level.FATAL;
+import static org.apache.logging.log4j.Level.INFO;
+import static org.apache.logging.log4j.Level.WARN;
+
 import org.apache.logging.log4j.Level;
 
-import static org.apache.logging.log4j.Level.*;
+import cpw.mods.fml.common.FMLLog;
 
 /**
  * An Objectified logger

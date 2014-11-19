@@ -1,15 +1,14 @@
 package sourcecoded.core.gameutility.screenshot;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IChatComponent;
+
 import org.lwjgl.input.Keyboard;
+
 import sourcecoded.core.SourceCodedCore;
 import sourcecoded.core.configuration.SCConfigManager;
-
-import javax.sql.rowset.serial.SerialRef;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 
 public class ScreenshotTickHandler {
 

@@ -2,8 +2,6 @@ package sourcecoded.core.util;
 
 import net.minecraft.util.StatCollector;
 
-import java.util.List;
-
 /**
  * Mostly just String modifiers
  */

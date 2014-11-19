@@ -1,21 +1,10 @@
 package sourcecoded.core;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.relauncher.CoreModManager;
-import cpw.mods.fml.relauncher.Side;
+import java.io.IOException;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraft.launchwrapper.LaunchClassLoader;
-import net.minecraft.util.RegistryNamespaced;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import sourcecoded.core.client.renderer.SCRenderManager;
@@ -27,12 +16,18 @@ import sourcecoded.core.gameutility.screenshot.ScreenshotShareCommand;
 import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
 import sourcecoded.core.util.CommonUtils;
 import sourcecoded.core.util.JustForFun;
-import sourcecoded.core.util.SourceLogger;
 import sourcecoded.core.version.VersionAlertHandler;
 import sourcecoded.core.version.VersionChecker;
 import sourcecoded.core.version.VersionCommand;
-
-import java.io.IOException;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION)
 public class SourceCodedCore {

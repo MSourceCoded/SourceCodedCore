@@ -1,10 +1,11 @@
 package sourcecoded.core.configuration;
 
-import org.apache.commons.io.FileUtils;
-import sourcecoded.core.util.SourceLogger;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+
+import sourcecoded.core.util.SourceLogger;
 
 /**
  * A configuration class extending SourceConfig

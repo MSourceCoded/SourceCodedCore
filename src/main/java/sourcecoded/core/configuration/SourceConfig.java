@@ -1,9 +1,9 @@
 package sourcecoded.core.configuration;
 
+import java.io.File;
+
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-
-import java.io.File;
 
 /**
  * A simplified version of Configuration files
