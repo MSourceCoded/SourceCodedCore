@@ -1,14 +1,14 @@
 package sourcecoded.core.version;
 
+import sourcecoded.core.SourceCodedCore;
+import sourcecoded.core.util.SourceLogger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import sourcecoded.core.util.SourceLogger;
-import cpw.mods.fml.relauncher.FMLInjectionData;
 
 public class ThreadDownloadVersion extends Thread {
 
@@ -31,7 +31,7 @@ public class ThreadDownloadVersion extends Thread {
         try {
             URL url = new URL(checker.downloadURL);
 
-            String MCPath = ((File)(FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
+            String MCPath = SourceCodedCore.getForgeRoot();
             String modsPath = MCPath + "/mods";
 
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -68,7 +68,7 @@ public class ThreadDownloadVersion extends Thread {
             File oldFile = new File(savePath.replace(checker.onlineParsed, checker.currentVersion));
 
             if (oldFile.exists())
-                oldFile.delete();
+                ThreadTrashRemover.inject(oldFile);
 
             checker.downloaded = true;
             checker.onDownloadComplete();

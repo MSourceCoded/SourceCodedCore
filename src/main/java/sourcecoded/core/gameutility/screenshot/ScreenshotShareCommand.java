@@ -1,22 +1,7 @@
 package sourcecoded.core.gameutility.screenshot;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -24,11 +9,18 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-
 import org.apache.commons.codec.binary.Base64;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
 
 public class ScreenshotShareCommand extends CommandBase {
 
@@ -47,8 +39,8 @@ public class ScreenshotShareCommand extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
-        if (args.length == 1 && SCScreenshotHandler.mostRecentScreenshot != null) {
+    public void processCommand(ICommandSender sender, final String[] args) {
+        if (args.length > 0 && SCScreenshotHandler.mostRecentScreenshot != null) {
             if (args[0].equalsIgnoreCase("imgur")) {
                 sender.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Upload started...."));
                 new Thread(new Runnable() {
@@ -56,7 +48,11 @@ public class ScreenshotShareCommand extends CommandBase {
                     public void run() {
                         String response = null;
                         try {
-                            response = getImgurContent("bcbfecd69a6eca7");
+                            if (args.length == 1)
+                                response = getImgurContent("bcbfecd69a6eca7", null);
+                            else if (args.length == 2)
+                                response = getImgurContent("bcbfecd69a6eca7", args[1]);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -69,7 +65,7 @@ public class ScreenshotShareCommand extends CommandBase {
                                 String url = data.get("link").getAsString();
 
                                 if (success) {
-                                    String str = "[{\"text\":\"imgur upload successful, link copied to clipboard! \",\"color\":\"white\"}"
+                                    String str = "[{\"text\":\"Imgur upload successful, link copied to clipboard! \",\"color\":\"white\"}"
                                             + ",{\"text\":\"" + url + "\",\"color\":\"aqua\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":"
                                             + "{\"text\":\"Click to open the link\",\"color\":\"yellow\"}}"
                                             + ",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + url + "\"}}]";
@@ -94,12 +90,18 @@ public class ScreenshotShareCommand extends CommandBase {
         }
     }
 
-    public String getImgurContent(String clientID) throws Exception {
+    public String getImgurContent(String clientID, String file) throws Exception {
         URL url;
         url = new URL("https://api.imgur.com/3/image");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        String data = encodeImageToB64(SCScreenshotHandler.mostRecentScreenshot);
+        //String data = encodeImageToB64(SCScreenshotHandler.mostRecentScreenshot);
+        String data = null;
+
+        if (file != null)
+            data = encodeImageToB64(new File(SCScreenshotHandler.screenshotDir, file));
+        else
+            data = encodeImageToB64(SCScreenshotHandler.mostRecentScreenshot);
 
         conn.setDoOutput(true);
         conn.setDoInput(true);

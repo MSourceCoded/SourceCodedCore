@@ -1,12 +1,14 @@
 package sourcecoded.core.proxy;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-
 import org.lwjgl.input.Keyboard;
-
 import sourcecoded.core.client.renderer.SCRenderManager;
 import sourcecoded.core.client.renderer.block.AdvancedTileRenderProxy;
 import sourcecoded.core.client.renderer.block.SimpleTileRenderProxy;
@@ -16,10 +18,6 @@ import sourcecoded.core.gameutility.screenshot.ScreenshotShareCommand;
 import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
 import sourcecoded.core.util.JustForFun;
 import sourcecoded.core.version.VersionAlertHandler;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ClientProxy extends ServerProxy {
     @Override
@@ -51,8 +49,6 @@ public class ClientProxy extends ServerProxy {
         RenderingRegistry.registerBlockHandler(new AdvancedTileRenderProxy());
         FMLCommonHandler.instance().bus().register(new SCRenderManager());
 
-        if (SCConfigManager.getBoolean(SCConfigManager.Properties.JUSTFORFUN_ENABLED)) {
-            MinecraftForge.EVENT_BUS.register(new JustForFun());
-        }
+        MinecraftForge.EVENT_BUS.register(new JustForFun());
     }
 }

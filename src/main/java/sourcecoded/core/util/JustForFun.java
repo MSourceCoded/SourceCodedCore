@@ -1,8 +1,7 @@
 package sourcecoded.core.util;
 
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,11 +9,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.obj.WavefrontObject;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import static org.lwjgl.opengl.GL11.*;
 
 /**
  * Mod makers can have fun too, right?
@@ -105,7 +102,7 @@ public class JustForFun {
 
             GL11.glColor4f(0.18F, 0.1F, 0.12F, 1F);
             tess.startDrawing(GL11.GL_TRIANGLES);
-            belt.tessellateAllExcept(tess, "Hex");
+            belt.tessellateAllExcept(tess, "Hex", "Logo");
             tess.draw();
 
             GL11.glColor4f(0.8F, 0.2F, 0.8F, 1F);
@@ -113,6 +110,17 @@ public class JustForFun {
             tess.setBrightness(200);
             belt.tessellatePart(tess, "Hex");
             tess.draw();
+
+            //Static Colour
+            GL11.glRotatef(180F, 1F, 0F, 0F);
+            GL11.glTranslatef(0F, -4F, 0F);
+            GL11.glColor4f(254/255F, 179/255F, 61/255F, 1F);
+            tess.startDrawing(GL11.GL_TRIANGLES);
+            tess.setBrightness(200);
+            belt.tessellatePart(tess, "Logo");
+            tess.draw();
+            GL11.glTranslatef(0F, 4F, 0F);
+            GL11.glRotatef(-180F, 1F, 0F, 0F);
 
             GL11.glPopMatrix();
 
