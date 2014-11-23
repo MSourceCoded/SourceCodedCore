@@ -1,6 +1,8 @@
 package sourcecoded.core;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -21,6 +23,10 @@ import java.io.IOException;
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION)
 public class SourceCodedCore {
+
+    @Mod.Instance(Constants.MODID)
+    public static SourceCodedCore instance;
+
     @SidedProxy(clientSide = "sourcecoded.core.proxy.ClientProxy", serverSide = "sourcecoded.core.proxy.ServerProxy")
     public static IProxy proxy;
 
@@ -32,7 +38,7 @@ public class SourceCodedCore {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         logger = new SourceLogger("SourceCodedCore");
-        isDevEnv = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
+        isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
         SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.2", Constants.MODID));
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
@@ -60,7 +66,14 @@ public class SourceCodedCore {
     }
 
     public static String getForgeRoot() {
-        return ((File)(FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
+        return ((File) (FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
+    }
+
+    public static ModContainer getContainer(String modid) {
+        for (ModContainer container : Loader.instance().getActiveModList())
+            if (container.getModId().equals(modid)) return container;
+
+        return null;
     }
 
 }

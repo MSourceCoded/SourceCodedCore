@@ -86,7 +86,7 @@ public class ScreenshotShareCommand extends CommandBase {
         } else if (args.length == 0) {
             throw new WrongUsageException(getCommandUsage(sender));
         } else {
-            throw new WrongUsageException("You have to take a screenshot first!");
+            throw new WrongUsageException("You have to take a screenshot first! (or the screenshot has not finished saving to disk. Try again soon)");
         }
     }
 
