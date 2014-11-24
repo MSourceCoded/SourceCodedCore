@@ -6,8 +6,20 @@ import sourcecoded.core.configuration.SCConfigManager;
 
 public class SourceConfigBaseGui extends GuiConfig {
 
+    static String modid;
+    static String name;
+    static SourceConfig config;
+    static List<IConfigElement> elements;
+
     public SourceConfigBaseGui(GuiScreen parentScreen) {
-        super(parentScreen, SourceConfigGuiFactory.createElements(SCConfigManager.getConfig()), "sourcecodedcore", false, false, "SourceCodedCore");
+        super(parentScreen, elements, modid, false, false, modid);
+    }
+    
+    public static void injectGuiContext(SourceConfigGuiFactory factory) {
+        this.modid = factory.modid;
+        this.name = this.modid;
+        this.config = factory.config;
+        this.elements = SourceConfigGuiFactory.createElements(factory.config);
     }
 
 }
