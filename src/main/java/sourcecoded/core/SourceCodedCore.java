@@ -12,6 +12,8 @@ import cpw.mods.fml.relauncher.FMLInjectionData;
 import net.minecraft.launchwrapper.Launch;
 import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
+import sourcecoded.core.configuration.gui.SourceConfigBaseGui;
+import sourcecoded.core.configuration.gui.SourceConfigGuiFactory;
 import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.util.SourceLogger;
 import sourcecoded.core.version.ThreadTrashRemover;
@@ -21,7 +23,7 @@ import sourcecoded.core.version.VersionCommand;
 import java.io.File;
 import java.io.IOException;
 
-@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION)
+@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, guiFactory = "sourcecoded.core.configuration.gui.GuiDummyFactory")
 public class SourceCodedCore {
 
     @Mod.Instance(Constants.MODID)
@@ -58,6 +60,9 @@ public class SourceCodedCore {
     public void postInit(FMLPostInitializationEvent event) {
         if (!isDevEnv && checker != null)
             checker.check();
+
+        SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig(), SourceConfigBaseGui.class);
+        factory.inject();
     }
 
     @Mod.EventHandler

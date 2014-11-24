@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.IModGuiFactory;
-import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -29,6 +28,8 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
     public static BiMap<ModContainer, IModGuiFactory> guiFactories = HashBiMap.create();
 
     public static boolean injectionAllowed = true;
+
+    //In my defence, all the GuiFactory stuff in FML doesn't let you pass your own instance, only Classes/Class names, hence the mess below
 
     @SuppressWarnings("unchecked")
     public static void finishLoading() throws IllegalAccessException {
@@ -54,16 +55,19 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
     String modid;
     Object modInstance;
     SourceConfig config;
+    Class<? extends GuiScreen> configGui;
 
-    SourceConfigGuiFactory(String modid, Object instance, SourceConfig config) {
+    @SuppressWarnings("unchecked")
+    SourceConfigGuiFactory(String modid, Object instance, SourceConfig config, Class configGui) {
         this.modid = modid;
         this.modInstance = instance;
         this.config = config;
+        this.configGui = configGui;
     }
 
-    public static SourceConfigGuiFactory create(String modid, Object modInstance, SourceConfig config) {
-        Class[] types = new Class[] {String.class, Object.class, SourceConfig.class};
-        Object[] params = new Object[] {modid, modInstance, config};
+    public static SourceConfigGuiFactory create(String modid, Object modInstance, SourceConfig config, Class<? extends GuiScreen> configGui) {
+        Class[] types = new Class[] {String.class, Object.class, SourceConfig.class, Class.class};
+        Object[] params = new Object[] {modid, modInstance, config, configGui};
         return EnumHelper.addEnum(SourceConfigGuiFactory.class, modid.toUpperCase(), types, params);
     }
 
@@ -96,7 +100,7 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
 
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return ConfigScreen.class;
+        return configGui;
     }
 
     @Override
@@ -109,15 +113,7 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
         return null;
     }
 
-    public class ConfigScreen extends GuiConfig {
-
-        public ConfigScreen(GuiScreen parentScreen) {
-            super(parentScreen, SourceConfigGuiFactory.createElements(config), modid, false, false, modid);
-        }
-
-    }
-
-    private static List<IConfigElement> createElements(SourceConfig config) {
+    public static List<IConfigElement> createElements(SourceConfig config) {
         List<IConfigElement> list = Lists.newArrayList();
 
         for (String cat : config.config.getCategoryNames()) {
