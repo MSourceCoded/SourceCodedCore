@@ -52,22 +52,20 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
         }
     }
 
-    String modid;
-    Object modInstance;
-    SourceConfig config;
-    Class<? extends GuiScreen> configGui;
+    public String modid;
+    public Object modInstance;
+    public SourceConfig config;
 
     @SuppressWarnings("unchecked")
-    SourceConfigGuiFactory(String modid, Object instance, SourceConfig config, Class configGui) {
+    SourceConfigGuiFactory(String modid, Object instance, SourceConfig config) {
         this.modid = modid;
         this.modInstance = instance;
         this.config = config;
-        this.configGui = configGui;
     }
 
-    public static SourceConfigGuiFactory create(String modid, Object modInstance, SourceConfig config, Class<? extends GuiScreen> configGui) {
-        Class[] types = new Class[] {String.class, Object.class, SourceConfig.class, Class.class};
-        Object[] params = new Object[] {modid, modInstance, config, configGui};
+    public static SourceConfigGuiFactory create(String modid, Object modInstance, SourceConfig config) {
+        Class[] types = new Class[] {String.class, Object.class, SourceConfig.class};
+        Object[] params = new Object[] {modid, modInstance, config};
         return EnumHelper.addEnum(SourceConfigGuiFactory.class, modid.toUpperCase(), types, params);
     }
 
@@ -100,7 +98,8 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
 
     @Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return configGui;
+        SourceConfigBaseGui.injectGuiContext(this);
+        return SourceConfigBaseGui.class;
     }
 
     @Override
