@@ -1,9 +1,7 @@
 package sourcecoded.core;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -14,6 +12,7 @@ import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
 import sourcecoded.core.configuration.gui.SourceConfigBaseGui;
 import sourcecoded.core.configuration.gui.SourceConfigGuiFactory;
+import sourcecoded.core.configuration.gui.SourceConfigGuiManager;
 import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.util.SourceLogger;
 import sourcecoded.core.version.ThreadTrashRemover;
@@ -41,12 +40,14 @@ public class SourceCodedCore {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         logger = new SourceLogger("SourceCodedCore");
         isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.2", Constants.MODID));
+        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.3", Constants.MODID));
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
 
         ThreadTrashRemover.initCleanup();
+
+        FMLCommonHandler.instance().bus().register(new SourceConfigGuiManager());
     }
 
     @Mod.EventHandler
@@ -61,7 +62,7 @@ public class SourceCodedCore {
         if (!isDevEnv && checker != null)
             checker.check();
 
-        SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig(), SourceConfigBaseGui.class);
+        SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig());
         factory.inject();
     }
 

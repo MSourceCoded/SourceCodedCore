@@ -1,8 +1,11 @@
 package sourcecoded.core.configuration.gui;
 
 import cpw.mods.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.IConfigElement;
 import net.minecraft.client.gui.GuiScreen;
-import sourcecoded.core.configuration.SCConfigManager;
+import sourcecoded.core.configuration.SourceConfig;
+
+import java.util.List;
 
 public class SourceConfigBaseGui extends GuiConfig {
 
@@ -16,10 +19,10 @@ public class SourceConfigBaseGui extends GuiConfig {
     }
     
     public static void injectGuiContext(SourceConfigGuiFactory factory) {
-        this.modid = factory.modid;
-        this.name = this.modid;
-        this.config = factory.config;
-        this.elements = SourceConfigGuiFactory.createElements(factory.config);
+        modid = factory.modid;
+        name = modid;
+        config = factory.config;
+        elements = SourceConfigGuiFactory.createElements(factory.config);
     }
 
 }
