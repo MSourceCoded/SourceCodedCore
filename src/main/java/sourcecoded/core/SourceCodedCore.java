@@ -1,6 +1,5 @@
 package sourcecoded.core;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -10,7 +9,6 @@ import cpw.mods.fml.relauncher.FMLInjectionData;
 import net.minecraft.launchwrapper.Launch;
 import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
-import sourcecoded.core.configuration.gui.SourceConfigBaseGui;
 import sourcecoded.core.configuration.gui.SourceConfigGuiFactory;
 import sourcecoded.core.configuration.gui.SourceConfigGuiManager;
 import sourcecoded.core.proxy.IProxy;
@@ -83,5 +81,3 @@ public class SourceCodedCore {
     }
 
 }
-
-

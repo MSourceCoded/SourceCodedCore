@@ -1,9 +1,9 @@
 package sourcecoded.core.configuration;
 
-import java.io.File;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+
+import java.io.File;
 
 /**
  * A simplified version of Configuration files
@@ -56,7 +56,7 @@ public class SourceConfig {
     }
 
     public int getInteger(String category, String propertyName) {
-        return config.get(category, propertyName, 0).getInt();
+        return getProperty(category, propertyName).getInt();
     }
 
     /**
@@ -67,7 +67,7 @@ public class SourceConfig {
     }
 
     public boolean getBool(String category, String propertyName) {
-        return config.get(category, propertyName, false).getBoolean();
+        return getProperty(category, propertyName).getBoolean();
     }
 
     /**
@@ -78,7 +78,7 @@ public class SourceConfig {
     }
 
     public double getDouble(String category, String propertyName) {
-        return config.get(category, propertyName, 0.0d).getDouble();
+        return getProperty(category, propertyName).getDouble();
     }
 
     /**
@@ -89,7 +89,7 @@ public class SourceConfig {
     }
 
     public String getString(String category, String propertyName) {
-        return config.get(category, propertyName, "").getString();
+        return getProperty(category, propertyName).getString();
     }
 
     public void setComment(String category, String property, String comment) {
