@@ -41,8 +41,6 @@ public class SourceCodedCore {
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
 
-        ThreadTrashRemover.initCleanup();
-
         FMLCommonHandler.instance().bus().register(new SourceConfigGuiManager());
     }
 
@@ -54,16 +52,18 @@ public class SourceCodedCore {
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(FMLPostInitializationEvent event) throws IOException {
         if (!isDevEnv && checker != null)
             checker.check();
 
         SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig());
         factory.inject();
+
+        ThreadTrashRemover.initCleanup();
     }
 
     public static String getForgeRoot() {
-        return ((File) (FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/').replace("/.", "");
+        return ((File) (FMLInjectionData.data()[6])).getAbsolutePath().replace(File.separatorChar, '/');
     }
 
     public static ModContainer getContainer(String modid) {

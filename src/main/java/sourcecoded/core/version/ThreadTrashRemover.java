@@ -1,11 +1,9 @@
 package sourcecoded.core.version;
 
-import org.apache.commons.io.FileUtils;
 import sourcecoded.core.SourceCodedCore;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class ThreadTrashRemover extends Thread {
 
@@ -36,8 +34,7 @@ public class ThreadTrashRemover extends Thread {
         File file = new File(cleanupDir + "/Cleanup.jar");
 
         if (!file.exists()) {
-            URL url = ThreadTrashRemover.class.getClassLoader().getResource("assets/sourcecodedcore/Cleanup.jar");
-            FileUtils.copyFile(new File(url.getFile()), file);
+            new ThreadDownloadCleanup();
         }
     }
 
