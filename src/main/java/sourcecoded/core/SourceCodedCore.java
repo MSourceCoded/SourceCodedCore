@@ -6,7 +6,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import net.minecraft.launchwrapper.Launch;
-import net.minecraftforge.client.ClientCommandHandler;
 import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
 import sourcecoded.core.configuration.gui.SourceConfigGuiFactory;
@@ -15,7 +14,6 @@ import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.util.SourceLogger;
 import sourcecoded.core.version.ThreadTrashRemover;
 import sourcecoded.core.version.VersionChecker;
-import sourcecoded.core.version.VersionCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,8 +60,6 @@ public class SourceCodedCore {
 
         SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig());
         factory.inject();
-
-        ClientCommandHandler.instance.registerCommand(new VersionCommand());
     }
 
     public static String getForgeRoot() {

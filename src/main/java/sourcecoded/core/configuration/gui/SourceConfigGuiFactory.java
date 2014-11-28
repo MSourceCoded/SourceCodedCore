@@ -24,7 +24,7 @@ import java.util.Set;
 public enum SourceConfigGuiFactory implements IModGuiFactory {
     ;
 
-    public static Field guiFactoriesField = ReflectionHelper.findField(FMLClientHandler.class, "guiFactories");
+    public static Field guiFactoriesField;
     public static BiMap<ModContainer, IModGuiFactory> guiFactories = HashBiMap.create();
 
     public static boolean injectionAllowed = true;
@@ -33,6 +33,8 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
 
     @SuppressWarnings("unchecked")
     public static void finishLoading() throws IllegalAccessException {
+        guiFactoriesField = ReflectionHelper.findField(FMLClientHandler.class, "guiFactories");
+
         BiMap<ModContainer, IModGuiFactory> guiFactoriesOld = guiFactories;
 
         guiFactories = (BiMap<ModContainer, IModGuiFactory>) guiFactoriesField.get(FMLClientHandler.instance());
