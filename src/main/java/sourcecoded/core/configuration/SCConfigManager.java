@@ -68,6 +68,7 @@ public class SCConfigManager {
     public static enum Categories {
         SCREENSHOT("screenshot", "Configuration Values for the 'Screenshot' Utility"),
         VERSION("version", "Version Checker"),
+        CRASHLOG("crash", "Crash Handler"),
         ;
 
         private String categoryName, comment;
@@ -96,6 +97,7 @@ public class SCConfigManager {
         VERS_AUTO(Categories.VERSION, "vers_auto", "Should new Versions of this mod automatically update?", true),
         VERS_SILENT(Categories.VERSION, "vers_silent", "Should this mod not send chat messages for updates?", false),
         VERS_ON(Categories.VERSION, "vers_enabled", "Should this mod use a version checker?", true),
+        CRASH(Categories.CRASHLOG, "crash_handler", "Should crash reports automatically be caught and uploaded to GitHub Gists (should always true)", true),
         ;
 
         String category, propertyName, comment;

@@ -9,11 +9,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
+import sourcecoded.core.SourceCodedCore;
 import sourcecoded.core.client.renderer.SCRenderManager;
 import sourcecoded.core.client.renderer.block.AdvancedTileRenderProxy;
 import sourcecoded.core.client.renderer.block.SimpleTileRenderProxy;
 import sourcecoded.core.client.settings.Keybindings;
 import sourcecoded.core.configuration.SCConfigManager;
+import sourcecoded.core.debug.DebugEvent;
 import sourcecoded.core.gameutility.screenshot.ScreenshotShareCommand;
 import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
 import sourcecoded.core.util.JustForFun;
@@ -44,6 +46,9 @@ public class ClientProxy extends ServerProxy {
         ClientCommandHandler.instance.registerCommand(new VersionCommand());
 
         FMLCommonHandler.instance().bus().register(new VersionAlertHandler());
+
+        if (SourceCodedCore.isDevEnv)
+            MinecraftForge.EVENT_BUS.register(DebugEvent.INSTANCE);
     }
 
     @Override

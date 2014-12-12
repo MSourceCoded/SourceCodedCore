@@ -10,6 +10,7 @@ import sourcecoded.core.configuration.SCConfigManager;
 import sourcecoded.core.configuration.VersionConfig;
 import sourcecoded.core.configuration.gui.SourceConfigGuiFactory;
 import sourcecoded.core.configuration.gui.SourceConfigGuiManager;
+import sourcecoded.core.crash.CrashHandler;
 import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.util.SourceLogger;
 import sourcecoded.core.version.ThreadTrashRemover;
@@ -18,7 +19,7 @@ import sourcecoded.core.version.VersionChecker;
 import java.io.File;
 import java.io.IOException;
 
-@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, guiFactory = "sourcecoded.core.configuration.gui.GuiDummyFactory")
+@Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, guiFactory = "sourcecoded.core.configuration.gui.SourceConfigGuiFactoryBase")
 public class SourceCodedCore {
 
     @Mod.Instance(Constants.MODID)
@@ -36,7 +37,7 @@ public class SourceCodedCore {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         logger = new SourceLogger("SourceCodedCore");
         isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.3", Constants.MODID));
+        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.4", Constants.MODID));
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
@@ -60,6 +61,9 @@ public class SourceCodedCore {
         factory.inject();
 
         ThreadTrashRemover.initCleanup();
+
+        if (SCConfigManager.getBoolean(SCConfigManager.Properties.CRASH))
+            CrashHandler.init();
     }
 
     public static String getForgeRoot() {

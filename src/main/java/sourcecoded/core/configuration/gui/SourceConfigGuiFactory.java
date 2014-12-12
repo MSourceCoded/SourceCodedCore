@@ -2,15 +2,12 @@ package sourcecoded.core.configuration.gui;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.IModGuiFactory;
 import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.util.EnumHelper;
 import sourcecoded.core.Constants;
@@ -19,9 +16,8 @@ import sourcecoded.core.configuration.SourceConfig;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Set;
 
-public enum SourceConfigGuiFactory implements IModGuiFactory {
+public enum SourceConfigGuiFactory {
     ;
 
     public static Field guiFactoriesField;
@@ -57,12 +53,15 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
     public String modid;
     public Object modInstance;
     public SourceConfig config;
+    public SourceConfigGuiFactoryBase factoryBase;
 
     @SuppressWarnings("unchecked")
     SourceConfigGuiFactory(String modid, Object instance, SourceConfig config) {
         this.modid = modid;
         this.modInstance = instance;
         this.config = config;
+        this.factoryBase = new SourceConfigGuiFactoryBase();
+        this.factoryBase.set(this);
     }
 
     public static SourceConfigGuiFactory create(String modid, Object modInstance, SourceConfig config) {
@@ -83,7 +82,7 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
         if (injectionAllowed) {
             ModContainer container = SourceCodedCore.getContainer(modid);
             if (container != null) {
-                guiFactories.put(container, this);
+                guiFactories.put(container, factoryBase);
             } else {
                 SourceCodedCore.logger.warn("Could not find container for mod: " + modid);
                 SourceCodedCore.logger.warn("Skipping GuiFactory injection");
@@ -92,26 +91,6 @@ public enum SourceConfigGuiFactory implements IModGuiFactory {
             SourceCodedCore.logger.warn("Could not inject GuiFactory for mod: " + modid);
             SourceCodedCore.logger.warn("Injection has already taken place");
         }
-    }
-
-    @Override
-    public void initialize(Minecraft minecraftInstance) {
-    }
-
-    @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass() {
-        SourceConfigBaseGui.injectGuiContext(this);
-        return SourceConfigBaseGui.class;
-    }
-
-    @Override
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
-        return ImmutableSet.of();
-    }
-
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
-        return null;
     }
 
     public static List<IConfigElement> createElements(SourceConfig config) {
