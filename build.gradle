@@ -24,7 +24,7 @@ forgeDetails.withReader {
 	project.ext.forgeProps = new ConfigSlurper().parse prop
 }
 
-version = "1.7.10-1.0.0b"
+version = "1.7.10-1.0.1"
 group= "sourcecoded.core" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "sourcecodedcore"
 

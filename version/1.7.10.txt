@@ -1,1 +1,1 @@
-1.7.10-1.0.0b@@http://minecraft.curseforge.com/mc-mods/225175-sourcecodedcore/files/2219891/download
+1.7.10-1.0.1@@http://minecraft.curseforge.com/mc-mods/225175-sourcecodedcore/files/2223659/download
