@@ -7,7 +7,6 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import sourcecoded.core.Constants;
 import sourcecoded.core.SourceCodedCore;
-import sourcecoded.core.version.VersionChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +45,6 @@ public class CrashHandler implements ICrashCallable {
         builder.append("\t\t\t" + container.getModId() + "@" + container.getVersion());
 
         packages.addAll(container.getOwnedPackages());
-
-        for (VersionChecker check : VersionChecker.checkers)
-            if (check.modid.equals(container.getModId()))
-                if (check.newVersionAvailable)
-                    builder.append("\t(OUTDATED! Online Version: " + check.onlineParsed + ")");
 
         builder.append("\n");
     }

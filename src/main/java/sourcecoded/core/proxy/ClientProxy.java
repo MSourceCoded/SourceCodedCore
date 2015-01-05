@@ -19,8 +19,6 @@ import sourcecoded.core.debug.DebugEvent;
 import sourcecoded.core.gameutility.screenshot.ScreenshotShareCommand;
 import sourcecoded.core.gameutility.screenshot.ScreenshotTickHandler;
 import sourcecoded.core.util.JustForFun;
-import sourcecoded.core.version.VersionAlertHandler;
-import sourcecoded.core.version.VersionCommand;
 
 public class ClientProxy extends ServerProxy {
     @Override
@@ -42,10 +40,6 @@ public class ClientProxy extends ServerProxy {
             FMLCommonHandler.instance().bus().register(new ScreenshotTickHandler());
             ClientCommandHandler.instance.registerCommand(new ScreenshotShareCommand());
         }
-
-        ClientCommandHandler.instance.registerCommand(new VersionCommand());
-
-        FMLCommonHandler.instance().bus().register(new VersionAlertHandler());
 
         if (SourceCodedCore.isDevEnv)
             MinecraftForge.EVENT_BUS.register(DebugEvent.INSTANCE);
