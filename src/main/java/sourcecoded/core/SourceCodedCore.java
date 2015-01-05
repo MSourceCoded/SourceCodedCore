@@ -37,7 +37,7 @@ public class SourceCodedCore {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         logger = new SourceLogger("SourceCodedCore");
         isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.4", Constants.MODID));
+        SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.5", Constants.MODID));
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
             checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
