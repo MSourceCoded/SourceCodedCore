@@ -13,8 +13,6 @@ import sourcecoded.core.configuration.gui.SourceConfigGuiManager;
 import sourcecoded.core.crash.CrashHandler;
 import sourcecoded.core.proxy.IProxy;
 import sourcecoded.core.util.SourceLogger;
-import sourcecoded.core.version.ThreadTrashRemover;
-import sourcecoded.core.version.VersionChecker;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +26,6 @@ public class SourceCodedCore {
     @SidedProxy(clientSide = "sourcecoded.core.proxy.ClientProxy", serverSide = "sourcecoded.core.proxy.ServerProxy")
     public static IProxy proxy;
 
-    public static VersionChecker checker;
     public static boolean isDevEnv = false;
 
     public static SourceLogger logger;
@@ -38,9 +35,6 @@ public class SourceCodedCore {
         logger = new SourceLogger("SourceCodedCore");
         isDevEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
         SCConfigManager.init(VersionConfig.createNewVersionConfig(event.getSuggestedConfigurationFile(), "0.5", Constants.MODID));
-
-        if (SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_ON))
-            checker = new VersionChecker(Constants.MODID, "https://raw.githubusercontent.com/MSourceCoded/SourceCodedCore/master/version/{MC}.txt", Constants.VERSION, SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_AUTO), SCConfigManager.getBoolean(SCConfigManager.Properties.VERS_SILENT));
 
         FMLCommonHandler.instance().bus().register(new SourceConfigGuiManager());
     }
@@ -54,13 +48,8 @@ public class SourceCodedCore {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) throws IOException {
-        if (!isDevEnv && checker != null)
-            checker.check();
-
         SourceConfigGuiFactory factory = SourceConfigGuiFactory.create(Constants.MODID, instance, SCConfigManager.getConfig());
         factory.inject();
-
-        ThreadTrashRemover.initCleanup();
 
         if (SCConfigManager.getBoolean(SCConfigManager.Properties.CRASH))
             CrashHandler.init();

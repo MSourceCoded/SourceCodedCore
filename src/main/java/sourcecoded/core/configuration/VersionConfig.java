@@ -47,7 +47,6 @@ public class VersionConfig extends SourceConfig {
         if (!currentVersion.equals(config.targetVersion)) {
             configLogger.error(String.format("Configuration File for Mod: %s is out of date! (target %s, found %s). The old configuration has been moved to /configOld/%s_old", config.modid, config.targetVersion, currentVersion, config.configFile.getName()));
 
-            //File newDir = new File(config.configFile.getPath() + "/../../configOld");
             File newDir = new File(config.configFile.getParentFile().getParentFile(), "configOld");
             File target = new File(newDir + "/" + config.configFile.getName() + "_old");
 

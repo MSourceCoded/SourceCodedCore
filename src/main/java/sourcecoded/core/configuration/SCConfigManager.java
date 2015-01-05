@@ -67,7 +67,6 @@ public class SCConfigManager {
 
     public static enum Categories {
         SCREENSHOT("screenshot", "Configuration Values for the 'Screenshot' Utility"),
-        VERSION("version", "Version Checker"),
         CRASHLOG("crash", "Crash Handler"),
         ;
 
@@ -94,9 +93,6 @@ public class SCConfigManager {
     public static enum Properties {
         SCREENSHOT_ENABLED(Categories.SCREENSHOT, "sc_ss_enabled", "Is the custom screenshot feature enabled", true),
         SCREENSHOT_MESSAGE(Categories.SCREENSHOT, "sc_ss_message", "Will display the default 'screenshot saved' text after a screenshot was taken", true),
-        VERS_AUTO(Categories.VERSION, "vers_auto", "Should new Versions of this mod automatically update?", false),
-        VERS_SILENT(Categories.VERSION, "vers_silent", "Should this mod not send chat messages for updates?", false),
-        VERS_ON(Categories.VERSION, "vers_enabled", "Should this mod use a version checker?", true),
         CRASH(Categories.CRASHLOG, "crash_handler", "Should crash reports automatically be caught and uploaded to GitHub Gists (should always true)", true),
         ;
 
